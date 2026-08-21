@@ -41,7 +41,7 @@
     <li class="rail__item" data-for="p2"><a class="rail__link" href="#p2"><span class="rail__n">2</span>쓰는 방법</a><span class="rail__bar" data-for="p2"><i></i></span></li>
     <li class="rail__item" data-for="p3"><a class="rail__link" href="#p3"><span class="rail__n">3</span>다른 눈</a><span class="rail__bar" data-for="p3"><i></i></span></li>
     <li class="rail__item" data-for="p4"><a class="rail__link" href="#p4"><span class="rail__n">4</span>글 설계</a><span class="rail__bar" data-for="p4"><i></i></span></li>
-    <li class="rail__item" data-for="p5"><a class="rail__link" href="#p5"><span class="rail__n">5</span>탐사 미션</a><span class="rail__bar" data-for="p5"><i></i></span></li>
+    <li class="rail__item" data-for="p5"><a class="rail__link" href="#p5"><span class="rail__n">5</span>한 달 동안</a><span class="rail__bar" data-for="p5"><i></i></span></li>
     <li class="rail__item" data-for="p6"><a class="rail__link" href="#p6"><span class="rail__n">6</span>수업 한 줄</a><span class="rail__bar" data-for="p6"><i></i></span></li>
   </ul>
 </nav>
@@ -76,7 +76,7 @@
   <a href="#p2"><b>03</b><span>쓰는 방법</span></a>
   <a href="#p3"><b>04</b><span>다른 눈</span></a>
   <a href="#p4"><b>05</b><span>글 설계</span></a>
-  <a href="#p5"><b>06</b><span>탐사 미션</span></a>
+  <a href="#p5"><b>06</b><span>한 달 동안</span></a>
   <a href="#p6"><b>07</b><span>수업 한 줄</span></a>
 </nav>
 
@@ -85,7 +85,7 @@
 <div class="chks" id="c-take">
   <label class="chk"><input type="checkbox" data-k="p0/take1"><span>두 글을 살펴 얻은 <span class="key">쓰는 방법 세 가지</span> — 짧게 쓰기 · 길게 쓰기 · 다른 눈으로</span></label>
   <label class="chk"><input type="checkbox" data-k="p0/take2"><span><span class="key">내 글 설계 카드</span> 1장 — 기행집에 실을 글 한 편 (사진 + 글)</span></label>
-  <label class="chk"><input type="checkbox" data-k="p0/take3"><span><span class="key">탐사 미션 카드</span> — 한 달 동안 무엇을 모아 올 것인가</span></label>
+  <label class="chk"><input type="checkbox" data-k="p0/take3"><span><span class="key">탐사 미션 카드</span> — 가기 전에 무엇을 적어 두고, 가서 무엇을 모아 올 것인가</span></label>
   <label class="chk"><input type="checkbox" data-k="p0/take4"><span>수업 전이 한 줄</span></label>
 </div>
 
@@ -713,7 +713,7 @@
       <tbody>
         <tr>
           <td><b>가는 길</b><br><span class="small">여정</span></td>
-          <td><b>가는 길만 짧게</b><br><span class="small">버스 번호, 갈아탄 곳, 골목 이름만 줄줄이 적고 도착하면 끝냅니다.</span></td>
+          <td><b>가는 길만 짧게</b><br><span class="small">버스 번호, 갈아탄 곳, 골목 이름만 줄줄이 적고 도착하면 끝냅니다. 챕터 5의 「떠나기 전 마음」이 여기 재료가 됩니다.</span></td>
           <td><b>왜 하필 이날 여기였나</b><br><span class="small">가기로 마음먹은 데서 시작해 도착이 마지막 문장이 됩니다.</span></td>
           <td><b>그 길로 매일 다니는 사람이 「나」</b><br><span class="small">나는 오늘 처음 간 길인데, 그 길로 매일 출근하는 사람이 있습니다. 그 사람이 자기 아침을 이야기합니다.</span></td>
         </tr>
@@ -865,12 +865,12 @@
 <section id="p5" data-part class="part">
   <div class="part__head">
     <span class="part__n">챕터 5</span>
-    <h2 class="part__title">한 달 동안 모아 올 것</h2>
+    <h2 class="part__title">한 달 동안 할 일</h2>
   </div>
 
   <div class="seat seat--maker">
     <span class="seat__label">◀ 직접 해 보기</span>
-    <p class="seat__note">오늘의 마지막 산출물입니다. <span class="key">이 카드 하나 들고 현장에 갑니다.</span></p>
+    <p class="seat__note">오늘의 마지막 산출물입니다. <span class="key">이 카드 하나 들고 현장에 갑니다.</span> 가기 전 · 가서 · 지킬 것, 세 묶음입니다.</p>
 
     <div class="field">
       <label class="field__label" for="trip-where">탐방지</label>
@@ -881,8 +881,55 @@
       <div class="line"><input class="ink" type="text" id="trip-when" data-k="trip/when" placeholder="날짜를 지금 정해 두면 갈 확률이 올라갑니다"></div>
     </div>
 
+    <div class="cell" id="c-5a0">
+      <div class="cell__head"><span class="cell__n">칸 5-A</span><h3 class="cell__title">가기 전에</h3></div>
+      <p class="cell__hint">다녀온 글은 도착해서 시작되지 않습니다. <span class="key">「알맞은 시절」은 열한 문단 가운데 다섯 개가 도착 전</span>입니다 — 직장을 그만둔 허허로움, 새벽 고속도로에서 맡은 봄 냄새, 문 연 집이 없어 헤맨 것. 그 다섯 문단에 적힌 것은 정보가 아니라 <span class="key">마음과 헤맴</span>입니다.</p>
+
+      <h3 class="h">① 미리 알아 두기 — 아는 만큼 보입니다</h3>
+      <p class="small">모르고 가면 그냥 오래된 건물이고, 알고 가면 눈에 걸리는 것이 생깁니다. 세 줄이면 됩니다.</p>
+      <div class="field">
+        <label class="field__label" for="pre1">이름 — 그곳 이름은 무슨 뜻입니까. 언제부터 그렇게 불렸습니까</label>
+        <div class="line"><input class="ink" type="text" id="pre1" data-k="pre/1" placeholder=""></div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="pre2">시간 — 언제 생겼고, 그동안 무엇이 바뀌었습니까</label>
+        <div class="line"><input class="ink" type="text" id="pre2" data-k="pre/2" placeholder=""></div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="pre3">지금 — 지금은 누가 씁니까. 무엇을 하는 곳입니까</label>
+        <div class="line"><input class="ink" type="text" id="pre3" data-k="pre/3" placeholder=""></div>
+      </div>
+      <p class="spec spec--seal"><span class="key">여기까지만 조사하십시오.</span> 더 알고 가면 현장에서 자기 눈으로 보지 않고 <span class="key">아는 것을 확인만 하다</span> 옵니다. 세 줄은 눈을 열어 주지만, 열 줄은 눈을 닫습니다.</p>
+
+      <h3 class="h">② 떠나기 전 마음 — 지금 적어야 합니다</h3>
+      <p class="small">다녀오면 이 칸은 못 씁니다. 가 보고 나면 이미 알아 버려서 <span class="key">모르고 있을 때의 마음</span>이 사라집니다. 그래서 오늘 적습니다.</p>
+      <div class="field">
+        <label class="field__label" for="pre4">왜 하필 이곳입니까 — 내 마음이 어디에 걸렸습니까</label>
+        <div class="line"><input class="ink" type="text" id="pre4" data-k="pre/4" placeholder=""></div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="pre5">가 보면 무엇이 있을 것 같습니까 — 지금 머릿속에 그려지는 장면</label>
+        <textarea class="ink" id="pre5" data-k="pre/5" rows="2" placeholder="맞히지 않아도 됩니다. 틀릴수록 좋습니다."></textarea>
+      </div>
+      <div class="field">
+        <label class="field__label" for="pre6">무엇이 궁금하고, 무엇이 걱정됩니까</label>
+        <div class="line"><input class="ink" type="text" id="pre6" data-k="pre/6" placeholder="예) 문을 열었을까 / 물어볼 사람이 있을까"></div>
+      </div>
+      <p class="spec">다녀온 뒤에 이 칸을 다시 펴 보십시오. <span class="key">예상과 달랐던 것이 그대로 글이 됩니다.</span> 기행문이 굴러가는 힘은 대개 거기서 나옵니다 — 「그럴 줄 알았는데 아니었다」.</p>
+
+      <h3 class="h">③ 챙길 것</h3>
+      <div class="chks chks--row">
+        <label class="chk chk--pick"><input type="checkbox" data-k="pre/k1"><span>손으로 적을 수첩과 펜</span></label>
+        <label class="chk chk--pick"><input type="checkbox" data-k="pre/k2"><span>기기 충전</span></label>
+        <label class="chk chk--pick"><input type="checkbox" data-k="pre/k3"><span>가는 길·여는 시간 확인</span></label>
+        <label class="chk chk--pick"><input type="checkbox" data-k="pre/k4"><span>물어볼 사람이 있는지</span></label>
+        <label class="chk chk--pick"><input type="checkbox" data-k="pre/k5"><span>사진 찍어도 되는 곳인지</span></label>
+      </div>
+      <p class="small">수첩을 따로 적는 이유 — 휴대폰으로만 적으면 <span class="key">사진만 남고 말은 안 남습니다.</span> 들은 말은 손으로 적어야 그 말투까지 남습니다.</p>
+    </div>
+
     <div class="cell" id="c-5a">
-      <div class="cell__head"><span class="cell__n">칸 5-A</span><h3 class="cell__title">현장에서 모을 여섯 가지</h3></div>
+      <div class="cell__head"><span class="cell__n">칸 5-B</span><h3 class="cell__title">가서 모을 여섯 가지</h3></div>
       <p class="cell__hint">무엇을 모을지 <span class="key">가기 전에</span> 정해 둡니다. 정하지 않고 가면 사진만 백 장 찍고 옵니다.</p>
       <div class="obs-grid">
         <div class="obs-card"><span class="obs-card__n">1</span><p class="obs-card__t">사진</p><p class="obs-card__q">②에서 정한 것을 여러 각도로</p><div class="line"><input class="ink" type="text" id="m1" data-k="mis/1" placeholder="무엇을 찍을까"></div></div>
@@ -895,7 +942,7 @@
     </div>
 
     <div class="cell" id="c-5b">
-      <div class="cell__head"><span class="cell__n">칸 5-B</span><h3 class="cell__title">가기 전에 지킬 것</h3></div>
+      <div class="cell__head"><span class="cell__n">칸 5-C</span><h3 class="cell__title">지킬 것</h3></div>
       <div class="chks">
         <label class="chk"><input type="checkbox" data-k="safe/1"><span><b>사람 얼굴</b>이 나온 사진은 반드시 <span class="key">동의를 받고</span> 찍습니다. 못 받았으면 싣지 않습니다</span></label>
         <label class="chk"><input type="checkbox" data-k="safe/2"><span><b>가게 상호·간판</b>을 쓸 때는 그곳에 불리하게 읽힐 문장을 함께 쓰지 않습니다</span></label>
@@ -910,7 +957,8 @@
   <div class="done">
     <p class="done__t">이 챕터 완료</p>
     <label class="chk"><input type="checkbox" data-progress data-k="p5/d1"><span>탐방지와 날짜를 적었습니다</span></label>
-    <label class="chk"><input type="checkbox" data-progress data-k="p5/d2"><span>모을 것 여섯 가지를 정했습니다</span></label>
+    <label class="chk"><input type="checkbox" data-progress data-k="p5/d3"><span>미리 알아 둘 세 줄과 <b>떠나기 전 마음</b>을 적었습니다</span></label>
+    <label class="chk"><input type="checkbox" data-progress data-k="p5/d2"><span>가서 모을 것 여섯 가지를 정했습니다</span></label>
   </div>
 </section>
 
