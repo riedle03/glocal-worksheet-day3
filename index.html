@@ -93,7 +93,7 @@
 <p>1일차에 시집이 나왔고, 2일차에 그림 에세이 두 쪽이 나왔습니다. <span class="key">오늘은 책이 안 나옵니다.</span> 대신 한 달 뒤 현장에서 꺼내 쓸 것을 만듭니다.</p>
 <div class="chks" id="c-take">
   <label class="chk"><input type="checkbox" data-k="p0/take1"><span>두 글을 뜯어 얻은 <span class="key">원리 세 가지</span> — 압축 · 펼침 · 남의 눈</span></label>
-  <label class="chk"><input type="checkbox" data-k="p0/take2"><span><span class="key">기행집 꼭지 설계 카드</span> 1장 — 내가 쓸 한 꼭지</span></label>
+  <label class="chk"><input type="checkbox" data-k="p0/take2"><span><span class="key">기행집 꼭지 설계 카드</span> 1장 — 내가 쓸 한 꼭지 (사진 + 글)</span></label>
   <label class="chk"><input type="checkbox" data-k="p0/take3"><span><span class="key">탐사 미션 카드</span> — 한 달 동안 무엇을 모아 올 것인가</span></label>
   <label class="chk"><input type="checkbox" data-k="p0/take4"><span>수업 전이 한 줄</span></label>
 </div>
@@ -218,16 +218,16 @@
 
     <div class="cell" id="c-1a">
       <div class="cell__head"><span class="cell__n">칸 1-A</span><h3 class="cell__title">이 시가 쓴 방법을 찾습니다</h3></div>
-      <p class="cell__hint"><span class="key">무엇을 썼는가</span>가 아니라 <span class="key">어떻게 썼는가</span>를 봅니다. 여섯 자리만 확인하면 됩니다. 아래 참고 카드를 펴 놓고 채우십시오.</p>
+      <p class="cell__hint"><span class="key">무엇을 썼는가</span>가 아니라 <span class="key">어떻게 썼는가</span>를 봅니다. 여섯 가지만 확인하면 됩니다. 아래 참고 카드를 펴 놓고 채우십시오.</p>
 
       <details>
-        <summary>참고 · 시를 뜯어볼 때 보는 여섯 자리</summary>
+        <summary>참고 · 시를 뜯어볼 때 보는 여섯 가지</summary>
         <div class="det-body">
           <ul class="plain">
             <li><b>1 · 연 나누기</b> — 연은 문단이 아니라 <span class="key">한 번의 숨</span>입니다. 연이 바뀌면 시간이 흐르거나 눈길이 옮겨 갑니다. 한 연에 무엇이 하나씩 들어 있는지 보십시오.</li>
             <li><b>2 · 문장부호</b> — 시는 마침표를 쓰지 않는 경우가 많습니다. 마침표를 빼면 <span class="key">행갈이와 연갈이가 그 일을 대신합니다.</span> 문장이 어디서 끝나는지를 읽는 사람이 정하게 됩니다.</li>
             <li><b>3 · 어조</b> — 말끝이 「-다」인지 「-습니다」인지에 따라 <span class="key">듣는 사람이 있는 말</span>인지 혼잣말인지가 갈립니다. 「-는데요」·「-고요」처럼 말끝을 흐리면 옆에 앉아 이야기하는 느낌이 납니다.</li>
-            <li><b>4 · 시제</b> — 지난 일을 쓰다가 중간에 <span class="key">현재형</span>으로 바꾸면 그 대목만 지금 눈앞에서 벌어지는 것처럼 됩니다. 바뀌는 자리가 곧 <span class="key">가장 오래 붙잡고 싶은 자리</span>입니다.</li>
+            <li><b>4 · 시제</b> — 지난 일을 쓰다가 중간에 <span class="key">현재형</span>으로 바꾸면 그 대목만 지금 눈앞에서 벌어지는 것처럼 됩니다. 바뀌는 대목이 곧 <span class="key">가장 오래 붙잡고 싶은 대목</span>입니다.</li>
             <li><b>5 · 끝맺음</b> — 서술어 없이 <span class="key">명사로 끝나는 연</span>은 사진처럼 멈춥니다. 설명하지 않고 그냥 놓아둡니다.</li>
             <li><b>6 · 따옴표</b> — 시 안에서 따옴표를 친 말은 <span class="key">글자 그대로 옮겼다는 표시</span>입니다. 그 대목만 다른 목소리가 됩니다.</li>
           </ul>
@@ -237,12 +237,12 @@
 
       <div class="tw tw--tight">
       <table>
-        <thead><tr><th style="width:15%">자리</th><th style="width:39%">무엇을 봅니까</th><th style="width:46%">「낙서」에서 찾은 것</th></tr></thead>
+        <thead><tr><th style="width:15%">표현 방법</th><th style="width:39%">무엇을 봅니까</th><th style="width:46%">「낙서」에서 찾은 것</th></tr></thead>
         <tbody>
           <tr><td><b>연 나누기</b></td><td>몇 연입니까. 한 연에 무엇이 하나씩 들어 있습니까</td><td><input class="ink" type="text" id="fm1" data-k="fm/1" placeholder="예) 12연 — 연마다 동작 하나"></td></tr>
           <tr><td><b>문장부호</b></td><td>마침표가 몇 개입니까. 없다면 무엇이 그 일을 대신합니까</td><td><input class="ink" type="text" id="fm2" data-k="fm/2" placeholder="세어 보십시오"></td></tr>
           <tr><td><b>어조</b></td><td>말끝이 어떻게 끝납니까. 누구에게 하는 말투입니까</td><td><input class="ink" type="text" id="fm3" data-k="fm/3" placeholder="…습니다 / …는데요 / …고요"></td></tr>
-          <tr><td><b>시제</b></td><td>어디서 과거가 현재로 바뀝니까. 왜 하필 그 자리일까요</td><td><input class="ink" type="text" id="fm4" data-k="fm/4" placeholder="몇 연부터"></td></tr>
+          <tr><td><b>시제</b></td><td>어디서 과거가 현재로 바뀝니까. 왜 하필 거기일까요</td><td><input class="ink" type="text" id="fm4" data-k="fm/4" placeholder="몇 연부터"></td></tr>
           <tr><td><b>끝맺음</b></td><td>서술어 없이 명사로 끝나는 연이 하나 있습니다. 어느 연입니까</td><td><input class="ink" type="text" id="fm5" data-k="fm/5" placeholder="그 행을 그대로 옮겨 보십시오"></td></tr>
           <tr><td><b>따옴표</b></td><td>따옴표를 친 말은 이 시에 하나뿐입니다. 무엇입니까</td><td><input class="ink" type="text" id="fm6" data-k="fm/6" placeholder=""></td></tr>
         </tbody>
@@ -250,7 +250,7 @@
       </div>
 
       <details>
-        <summary>막히면 — 자리별 실마리</summary>
+        <summary>막히면 — 하나씩 실마리</summary>
         <div class="det-body">
           <ul class="plain">
             <li><b>연 나누기</b> — 첫 연은 떠나는 대목, 마지막 연은 벽에 적는 손입니다. 그 사이가 몇 덩이입니까.</li>
@@ -267,12 +267,12 @@
         <label class="field__label" for="fm-one">여섯 중 <b>이 시를 가장 이 시답게 만든 것</b> 하나와 그 까닭</label>
         <textarea class="ink" id="fm-one" data-k="fm/one" rows="3" placeholder="한두 문장이면 됩니다."></textarea>
       </div>
-      <label class="chk"><input type="checkbox" data-progress data-k="p1/form-done"><span>여섯 자리를 확인했습니다. 이제 긴 쪽을 엽니다</span></label>
+      <label class="chk"><input type="checkbox" data-progress data-k="p1/form-done"><span>여섯 가지를 확인했습니다. 이제 긴 쪽을 엽니다</span></label>
     </div>
 
     <!-- ── 읽기 2 ── -->
     <h3 class="h">읽기 2 · 이제 긴 쪽</h3>
-    <p class="small">읽으면서 <span class="key">방금 본 여섯 자리가 여기서는 어떻게 되어 있는지</span> 살피십시오. 대부분 <span class="key">반대로</span> 되어 있습니다. 같은 사람이 같은 하루를 쓰면서 방법을 통째로 바꿨습니다.</p>
+    <p class="small">읽으면서 <span class="key">방금 본 여섯 가지가 여기서는 어떻게 되어 있는지</span> 살피십시오. 대부분 <span class="key">반대로</span> 되어 있습니다. 같은 사람이 같은 하루를 쓰면서 방법을 통째로 바꿨습니다.</p>
 
     <details>
       <summary>알맞은 시절 · 박준</summary>
@@ -297,7 +297,7 @@
     </details>
 
     <div class="cell" id="c-1b0">
-      <div class="cell__head"><span class="cell__n">칸 1-A′</span><h3 class="cell__title">여섯 자리가 여기서는 뒤집힙니다</h3></div>
+      <div class="cell__head"><span class="cell__n">칸 1-A′</span><h3 class="cell__title">여섯 가지가 여기서는 뒤집힙니다</h3></div>
       <p class="cell__hint">산문에서 <span class="key">확인한 것</span>을 고르십시오. 읽으면서 눈으로 확인한 것만 고릅니다.</p>
       <div class="chks">
         <label class="chk"><input type="checkbox" data-k="inv/1"><span><b>연이 아니라 문단</b>으로 나뉜다</span></label>
@@ -308,7 +308,7 @@
         <label class="chk"><input type="checkbox" data-k="inv/6"><span>따옴표가 <b>여러 번</b> 나온다 — 주고받은 말이 그대로 들어 있다</span></label>
       </div>
       <div class="field">
-        <label class="field__label" for="inv-note">여섯 중 <b>가장 크게 달라진 자리</b> 하나와, 그래서 무엇이 달라졌는지</label>
+        <label class="field__label" for="inv-note">여섯 중 <b>가장 크게 달라진 것</b> 하나와, 그래서 무엇이 달라졌는지</label>
         <div class="line"><input class="ink" type="text" id="inv-note" data-k="inv/note" placeholder="예) 시제 — 현재로 갈아타지 않으니 장면이 눈앞에서 벌어지지 않는다"></div>
       </div>
       <p class="spec">방법이 다르면 <span class="key">같은 하루도 다른 글이 됩니다.</span> 무엇을 겪었느냐가 아니라 어떻게 쓰느냐가 갈래를 정합니다.</p>
@@ -379,11 +379,11 @@
     <!-- 1-D 차이점 -->
     <div class="cell" id="c-1d">
       <div class="cell__head"><span class="cell__n">칸 1-D</span><h3 class="cell__title">셋째 문단 · 차이점</h3></div>
-      <p class="cell__hint">네 자리만 견줍니다. <span class="key">첫 줄은 채워 두었습니다.</span> 나머지 세 줄을 채우면 문단이 거의 나옵니다.</p>
+      <p class="cell__hint">네 가지만 견줍니다. <span class="key">첫 줄은 채워 두었습니다.</span> 나머지 세 줄을 채우면 문단이 거의 나옵니다.</p>
 
       <div class="tw tw--tight">
       <table>
-        <thead><tr><th style="width:20%">견주는 자리</th><th style="width:40%">긴 쪽 「알맞은 시절」</th><th style="width:40%">짧은 쪽 「낙서」</th></tr></thead>
+        <thead><tr><th style="width:20%">견주는 것</th><th style="width:40%">긴 쪽 「알맞은 시절」</th><th style="width:40%">짧은 쪽 「낙서」</th></tr></thead>
         <tbody>
           <tr>
             <td><b>여자의 몸</b></td>
@@ -401,7 +401,7 @@
             <td><input class="ink" type="text" id="d3s" data-k="diff/3s" placeholder="…습니다 / 마침표가 없다"></td>
           </tr>
           <tr>
-            <td><b>끝나는 자리</b></td>
+            <td><b>끝맺는 법</b></td>
             <td><input class="ink" type="text" id="d4p" data-k="diff/4p" placeholder="어디까지 쓰고 끝나나"></td>
             <td><input class="ink" type="text" id="d4s" data-k="diff/4s" placeholder="어디서 멈추나"></td>
           </tr>
@@ -416,18 +416,18 @@
 
       <div class="field">
         <label class="field__label" for="diff-para">셋째 문단 <span class="field__unit">400자 이내</span></label>
-        <textarea class="ink" id="diff-para" data-k="diff/para" rows="5" placeholder="네 자리를 이어 한 문단으로."></textarea>
+        <textarea class="ink" id="diff-para" data-k="diff/para" rows="5" placeholder="네 가지를 이어 한 문단으로."></textarea>
         <p class="count"><span id="diff-count">0자</span></p>
       </div>
 
       <details>
-        <summary>막히면 — 견주는 자리별 힌트</summary>
+        <summary>막히면 — 하나씩 힌트</summary>
         <div class="det-body">
           <ul class="plain">
             <li><b>여자의 몸</b> — 한쪽은 <span class="key">이름을 대고</span>, 한쪽은 <span class="key">그려 보입니다</span>. 어느 쪽이 더 오래 남습니까.</li>
             <li><b>가는 길</b> — 긴 쪽은 도착하기까지 다섯 문단을 씁니다. 짧은 쪽은 몇 행입니까. 무엇이 통째로 빠졌습니까.</li>
             <li><b>말투와 부호</b> — 한쪽은 적어 두는 말투에 마침표를 찍고, 한쪽은 <span class="key">말을 거는 말투에 마침표가 하나도 없습니다.</span></li>
-            <li><b>끝나는 자리</b> — 긴 쪽은 「나왔다」까지 씁니다. 짧은 쪽은 어디서 손을 멈춥니까.</li>
+            <li><b>끝맺는 법</b> — 긴 쪽은 「나왔다」까지 씁니다. 짧은 쪽은 어디서 손을 멈춥니까.</li>
           </ul>
         </div>
       </details>
@@ -439,7 +439,7 @@
       <p class="cell__hint">지금 쓴 세 문단 전체에 제목을 답니다. <span class="seal">「시」와 「산문」이라는 낱말은 쓸 수 없습니다.</span> 갈래 이름을 빼면 무엇이 다른지 직접 말해야 합니다.</p>
       <div class="field">
         <label class="field__label" for="title-final">제목</label>
-        <div class="line"><input class="ink" type="text" id="title-final" data-k="ttl/final" placeholder="예) 병명을 대지 않는 자리 / 같은 벽에 같은 문장을 적고"></div>
+        <div class="line"><input class="ink" type="text" id="title-final" data-k="ttl/final" placeholder="예) 병명을 대지 않는다 / 같은 벽에 같은 문장을 적고"></div>
         <p class="url-hint" id="title-hint" hidden></p>
       </div>
       <details>
@@ -479,7 +479,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="field__label" for="park-take">셋 중 <b>내 학생에게 가장 먼저 필요한 것</b>은 무엇이고, 왜 그렇습니까</label>
+        <label class="field__label" for="park-take">셋 중 <b>우리 학생들에게 가장 먼저 필요한 것</b>은 무엇이고, 왜 그렇습니까</label>
         <textarea class="ink" id="park-take" data-k="park/take" rows="3" placeholder="한두 문장이면 됩니다."></textarea>
       </div>
     </div>
@@ -517,7 +517,7 @@
       </tbody>
     </table>
     </div>
-    <p class="spec">여기서 흔한 오해 하나가 깨집니다. <span class="key">두 글 다 감상을 말하지 않습니다.</span> 갈리는 곳은 여정입니다. 긴 쪽은 도착까지를 다 쓰고, 짧은 쪽은 도착부터 씁니다. 다녀온 글이 지루해지는 자리가 바로 여기입니다.</p>
+    <p class="spec">여기서 흔한 오해 하나가 깨집니다. <span class="key">두 글 다 감상을 문장으로 말하지 않습니다.</span> 갈리는 것은 여정입니다. 산문은 도착하기까지 다섯 문단을 쓰고, 시는 두 행으로 지나갑니다. 다녀온 글이 늘어지느냐 마느냐는 <span class="key">가는 길을 얼마나 쓰느냐</span>에서 갈립니다.</p>
 
     <h3 class="h">그래서 — 세 개의 손잡이</h3>
     <div class="scene-grid">
@@ -531,7 +531,7 @@
       </div>
       <div class="scene-card">
         <b>손잡이 3 · 남의 눈</b>
-        <p>내가 아니라 그 자리에 있던 누군가의 시점으로. <span class="small">— 챕터 3</span></p>
+        <p>내가 아니라 그곳에 있던 누군가의 눈으로. <span class="small">— 챕터 3</span></p>
       </div>
     </div>
 
@@ -592,24 +592,24 @@
     <span class="seat__label">◀ 배우는 사람 자리</span>
     <p class="seat__note">강사의 실제 수업 사례를 봅니다. 여기서 기행집의 <span class="key">구성 원리</span>가 나옵니다.</p>
 
-    <p>고등학교 1학년 국어 수업이었습니다. 단편소설 한 편을 읽었는데, 그 소설은 <span class="key">주인공 한 사람의 눈</span>으로만 쓰여 있었습니다. 그래서 소설 안에는 <span class="key">비어 있는 자리</span>가 있었습니다 — 상대 인물이 왜 그렇게 했는지, 그 속마음은 한 줄도 나오지 않습니다.</p>
+    <p>고등학교 1학년 국어 수업이었습니다. 단편소설 한 편을 읽었는데, 그 소설은 <span class="key">주인공 한 사람의 눈</span>으로만 쓰여 있었습니다. 그래서 소설 안에는 <span class="key">비워 둔 곳</span>이 있었습니다 — 상대 인물이 왜 그렇게 했는지, 그 속마음은 한 줄도 나오지 않습니다.</p>
     <div class="page-map" aria-label="릴레이 소설 수업 흐름">
-      <div class="page-map__item"><b>1</b><span>비어 있는 자리를 찾는다</span></div>
+      <div class="page-map__item"><b>1</b><span>비워 둔 곳을 찾는다</span></div>
       <div class="page-map__item"><b>2</b><span>모둠마다 한 장면씩 그 인물의 눈으로</span></div>
       <div class="page-map__item"><b>3</b><span>시간순으로 이으면 한 편이 된다</span></div>
       <div class="page-map__item"><b>4</b><span>실제 독자에게 보낸다</span></div>
     </div>
-    <p class="small">초고는 <span class="key">AI 없이</span> 학생 손으로 씁니다. AI는 다 쓴 뒤 합평 자리에만 들어오고, 학생은 그 제안을 <span class="key">받아들일지 말지 스스로 정하고 그 근거를 원문에서 찾아</span> 적습니다.</p>
+    <p class="small">초고는 <span class="key">AI 없이</span> 학생 손으로 씁니다. AI는 다 쓴 뒤 합평할 때만 들어오고, 학생은 그 제안을 <span class="key">받아들일지 말지 스스로 정하고 그 근거를 원문에서 찾아</span> 적습니다.</p>
 
     <div class="cell" id="c-3a">
       <div class="cell__head"><span class="cell__n">칸 3-A</span><h3 class="cell__title">이 기법을 탐방지로 옮기면</h3></div>
-      <p class="cell__hint">탐방지에도 <span class="key">비어 있는 자리</span>가 있습니다. 그곳에 있었지만 말이 남지 않은 누군가·무언가입니다.</p>
+      <p class="cell__hint">탐방지도 똑같습니다. 나는 가서 보고 왔지만, <span class="key">그쪽에서 나를 본 이야기는 아무 데도 없습니다.</span> 가게를 지키는 사람, 오래된 계단, 옮겨 놓은 비석 — 사람이 아니어도 됩니다.</p>
       <div class="field">
-        <label class="field__label" for="pov-who">내 탐방지에서 <b>말이 남지 않은 쪽</b>은 누구입니까 (사람이 아니어도 됩니다)</label>
+        <label class="field__label" for="pov-who">거기서 <b>나를 보고 있었을 쪽</b>은 누구(무엇)입니까</label>
         <div class="line"><input class="ink" type="text" id="pov-who" data-k="pov/who" placeholder="예) 매일 그 문을 여닫는 사람 / 오래된 계단 / 옮겨진 비석"></div>
       </div>
       <div class="field">
-        <label class="field__label" for="pov-see">그 눈으로 보면 <b>무엇이 달라 보입니까</b></label>
+        <label class="field__label" for="pov-see">그 눈으로 보면 <b>내가 어떻게 보였을까요</b></label>
         <textarea class="ink" id="pov-see" data-k="pov/see" rows="3" placeholder="한두 문장."></textarea>
       </div>
       <p class="spec">여럿이 <span class="key">서로 다른 눈</span>으로 같은 곳을 쓰면, 기행집은 글 모음이 아니라 <span class="key">여러 시점이 겹친 한 권</span>이 됩니다.</p>
@@ -618,7 +618,7 @@
 
   <div class="done">
     <p class="done__t">이 챕터 완료</p>
-    <label class="chk"><input type="checkbox" data-progress data-k="p3/d1"><span>내 탐방지에서 「말이 남지 않은 쪽」을 하나 정했습니다</span></label>
+    <label class="chk"><input type="checkbox" data-progress data-k="p3/d1"><span>나를 보고 있었을 쪽을 하나 정했습니다</span></label>
   </div>
 </section>
 
@@ -640,7 +640,7 @@
       <thead><tr><th style="width:12%"></th><th>압축</th><th>펼침</th><th>남의 눈</th></tr></thead>
       <tbody>
         <tr><td><b>여정</b></td><td>정류장·골목 이름만으로 쓴 「가는 길」</td><td>왜 하필 이날 이곳이었나 — 도착까지가 본문</td><td>그 길을 매일 오가는 사람의 하루</td></tr>
-        <tr><td><b>견문</b></td><td>한 장면 한 컷, 설명 없이</td><td>본 것에 자료를 붙여 펴는 답사기</td><td>그 자리의 사물이 본 하루</td></tr>
+        <tr><td><b>견문</b></td><td>한 장면 한 컷, 설명 없이</td><td>본 것에 자료를 붙여 펴는 답사기</td><td>그곳의 사물이 본 하루</td></tr>
         <tr><td><b>감상</b></td><td>마지막 한 줄만 남기고 다 버리기</td><td>이곳이 왜 나를 흔들었나 — 내 교과와 잇기</td><td>그곳이 나를 본다면 뭐라 할까</td></tr>
       </tbody>
     </table>
@@ -660,7 +660,7 @@
         <label class="field__label" for="k2">② 탐방지 안에서 <b>내가 붙잡을 것 하나</b></label>
         <div class="line"><input class="ink" type="text" id="k2" data-k="kk/2" placeholder="구체물 하나로. 「분위기」·「역사」가 아니라 눈에 보이는 것"></div>
       </div>
-      <p class="small">고를 것이 안 보이면 — 간판 · 문 · 계단 · 의자 · 나무 · 비석 · 손글씨 · 파는 물건 · 냄새 · 반복해 들린 말 · 닳은 자리</p>
+      <p class="small">고를 것이 안 보이면 — 간판 · 문 · 계단 · 의자 · 나무 · 비석 · 손글씨 · 파는 물건 · 냄새 · 반복해 들린 말 · 닳은 곳</p>
 
       <div class="field">
         <label class="field__label" for="k3">③ <b>렌즈</b> — 왜 하필 내가 이걸 씁니까</label>
@@ -687,10 +687,19 @@
       </div>
 
       <div class="field">
-        <label class="field__label" for="k6">⑥ 지면 모양 — 몇 쪽, 글은 얼마쯤, 이미지는 몇 장</label>
-        <div class="line"><input class="ink" type="text" id="k6" data-k="kk/6" placeholder="예) A4 세로 2쪽 · 본문 한 쪽 · 사진 1장"></div>
+        <label class="field__label">⑥ 지면의 꼴 — <b>사진은 기본으로 들어갑니다</b></label>
+        <div class="chks">
+          <label class="chk chk--pick"><input type="radio" name="form" data-k="kk/6-a"><span><b>포토시</b> — 사진 한 장 + 짧은 글. 여백이 넓습니다</span></label>
+          <label class="chk chk--pick"><input type="radio" name="form" data-k="kk/6-b"><span><b>포토에세이</b> — 사진 + 이어지는 산문</span></label>
+          <label class="chk chk--pick"><input type="radio" name="form" data-k="kk/6-c"><span><b>사진 여럿 + 짧은 말</b> — 사진이 앞서고 글이 붙습니다</span></label>
+        </div>
       </div>
-      <p class="small">바깥선만 맞춥니다 — <span class="key">A4 세로 · 2~4쪽.</span> 그 안은 마음대로.</p>
+      <p class="small">⑤와 짝이 있습니다 — <span class="key">압축이면 대개 포토시, 펼침이면 포토에세이</span>입니다. 남의 눈은 어느 꼴로도 됩니다.</p>
+      <div class="field">
+        <label class="field__label" for="k6">쪽수와 사진 수</label>
+        <div class="line"><input class="ink" type="text" id="k6" data-k="kk/6" placeholder="예) A4 세로 2쪽 · 사진 1장"></div>
+      </div>
+      <p class="small">바깥선만 맞춥니다 — <span class="key">A4 세로 · 2~4쪽 · 사진 최소 한 장.</span> 그 안은 마음대로.</p>
 
       <div class="field">
         <label class="field__label" for="k7">⑦ 이 꼭지가 기행집에서 <b>하는 일</b> — 옆 꼭지와 무엇이 다릅니까</label>
@@ -762,8 +771,8 @@
         <div class="obs-card"><span class="obs-card__n">2</span><p class="obs-card__t">들은 말</p><p class="obs-card__q">그곳 사람의 말 한 마디를 그대로</p><div class="line"><input class="ink" type="text" id="m2" data-k="mis/2" placeholder="누구에게 무엇을 물을까"></div></div>
         <div class="obs-card"><span class="obs-card__n">3</span><p class="obs-card__t">소리 · 냄새</p><p class="obs-card__q">사진에 안 찍히는 것</p><div class="line"><input class="ink" type="text" id="m3" data-k="mis/3" placeholder="무엇을 적어 올까"></div></div>
         <div class="obs-card"><span class="obs-card__n">4</span><p class="obs-card__t">글자 · 숫자</p><p class="obs-card__q">간판 · 안내판 · 연도 · 가격</p><div class="line"><input class="ink" type="text" id="m4" data-k="mis/4" placeholder="어디를 볼까"></div></div>
-        <div class="obs-card"><span class="obs-card__n">5</span><p class="obs-card__t">사람</p><p class="obs-card__q">그 자리를 지키는 사람</p><div class="line"><input class="ink" type="text" id="m5" data-k="mis/5" placeholder="누구를 볼까"></div></div>
-        <div class="obs-card"><span class="obs-card__n">6</span><p class="obs-card__t">닳은 자리</p><p class="obs-card__q">오래 쓴 흔적 · 고쳐 쓴 흔적</p><div class="line"><input class="ink" type="text" id="m6" data-k="mis/6" placeholder="무엇이 닳아 있을까"></div></div>
+        <div class="obs-card"><span class="obs-card__n">5</span><p class="obs-card__t">사람</p><p class="obs-card__q">그곳을 지키는 사람</p><div class="line"><input class="ink" type="text" id="m5" data-k="mis/5" placeholder="누구를 볼까"></div></div>
+        <div class="obs-card"><span class="obs-card__n">6</span><p class="obs-card__t">닳은 곳</p><p class="obs-card__q">오래 쓴 흔적 · 고쳐 쓴 흔적</p><div class="line"><input class="ink" type="text" id="m6" data-k="mis/6" placeholder="무엇이 닳아 있을까"></div></div>
       </div>
     </div>
 
@@ -805,11 +814,11 @@
         <label class="chk"><input type="checkbox" data-k="tr/1"><span><b>짧은 것 먼저, 그 다음 긴 것</b> — 짐작하게 한 뒤 원문을 편다</span></label>
         <label class="chk"><input type="checkbox" data-k="tr/2"><span><b>같은 재료를 두 번 쓰기</b> — 한 번은 짧게, 한 번은 길게</span></label>
         <label class="chk"><input type="checkbox" data-k="tr/3"><span><b>병명을 대지 않기</b> — 설명 대신 보여 주기</span></label>
-        <label class="chk"><input type="checkbox" data-k="tr/4"><span><b>남의 눈으로 다시 쓰기</b> — 비어 있는 자리를 채우는 릴레이</span></label>
+        <label class="chk"><input type="checkbox" data-k="tr/4"><span><b>남의 눈으로 다시 쓰기</b> — 비워 둔 곳을 채우는 릴레이</span></label>
         <label class="chk"><input type="checkbox" data-k="tr/5"><span><b>아홉 칸에서 고르기</b> — 백지 대신 메뉴판을 주기</span></label>
       </div>
       <div class="field">
-        <label class="field__label" for="transfer">내 교과 · 내 학생으로 옮기면 <b>한 줄</b></label>
+        <label class="field__label" for="transfer">내 교과 · 우리 학생들에게 옮기면 <b>한 줄</b></label>
         <textarea class="ink" id="transfer" data-k="tr/line" rows="3" placeholder="예) 2학기 지역사 단원에서, 답사 사진 한 장을 두 번 쓰게 한다 — 설명 없이 한 번, 자료를 붙여 한 번."></textarea>
       </div>
     </div>

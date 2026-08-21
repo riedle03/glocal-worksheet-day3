@@ -289,6 +289,7 @@
   function buildMemo() {
     var thick = pickedRadio(["kk/4-a", "kk/4-b", "kk/4-c"], ["여정", "견문", "감상"]);
     var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
+    var form = pickedRadio(["kk/6-a", "kk/6-b", "kk/6-c"], ["포토시", "포토에세이", "사진 여럿 + 짧은 말"]);
     var lines = [
       "저는 문화탐방기행집에 실을 꼭지 하나를 설계하는 중입니다. 아래는 제가 이미 정한 것입니다.",
       "정해 둔 것을 바꾸지 말고, 빈 곳을 캐물어 주세요.",
@@ -299,11 +300,12 @@
       "렌즈(내 교과·내 질문) : " + (val("k3") || "(아직 못 정함)"),
       "두껍게 쓸 것 : " + thick,
       "손잡이 : " + grip,
-      "지면 모양 : " + (val("k6") || "(아직 못 정함)"),
+      "지면의 꼴 : " + form + " (사진은 기본으로 들어갑니다)",
+      "쪽수·사진 수 : " + (val("k6") || "(아직 못 정함)"),
       "이 꼭지가 하는 일 : " + (val("k7") || "(아직 못 적음)")
     ];
     var who = val("pov-who");
-    if (who) lines.push("말이 남지 않은 쪽 : " + who);
+    if (who) lines.push("나를 보고 있었을 쪽 : " + who);
     return lines.join("\n");
   }
 
