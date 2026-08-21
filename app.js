@@ -1,4 +1,4 @@
-/* 3일차 활동지 — 입력 보존 · 진행 표시 · 문단 뼈대 조립 · 인쇄 */
+/* 3일차 활동지 — 입력 보존 · 진행 표시 · 문단 초안 조립 · 인쇄 */
 (function () {
   "use strict";
 
@@ -162,7 +162,7 @@
     });
   }
 
-  /* ── 문단 뼈대 조립 ── */
+  /* ── 문단 초안 조립 ── */
   function val(id) {
     var el = document.getElementById(id);
     return el ? (el.value || "").trim() : "";
@@ -250,7 +250,7 @@
       );
     });
     fill("diff-para", lines.join(" "), "diff-msg",
-      lines.length + "개 자리를 이었습니다. 문장이 끊기니 이어 주는 말을 넣어 손보세요.");
+      lines.length + "개를 이었습니다. 문장이 끊기니 이어 주는 말을 넣어 손보세요.");
   });
 
   /* ── 챗봇 메모 ── */
@@ -277,21 +277,21 @@
 
   function buildMemo() {
     var thick = pickedRadio(["kk/4-a", "kk/4-b", "kk/4-c"], ["여정", "견문", "감상"]);
-    var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
+    var how = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["짧게 쓰기", "길게 쓰기", "다른 눈으로"]);
     var form = pickedRadio(["kk/6-a", "kk/6-b", "kk/6-c"], ["포토시", "포토에세이", "사진 여럿 + 짧은 말"]);
     var lines = [
-      "저는 문화탐방기행집에 실을 꼭지 하나를 설계하는 중입니다. 아래는 제가 이미 정한 것입니다.",
+      "저는 문화탐방기행집에 실을 글 한 편을 설계하는 중입니다. 아래는 제가 이미 정한 것입니다.",
       "정해 둔 것을 바꾸지 말고, 빈 곳을 캐물어 주세요.",
       "",
-      "꼭지 가제 : " + (val("k1") || "(아직 못 정함)"),
+      "글 제목(임시) : " + (val("k1") || "(아직 못 정함)"),
       "탐방지 : " + (val("trip-where") || "(아직 안 적음)"),
       "자세히 볼 것 : " + (val("k2") || "(아직 못 정함)"),
-      "렌즈(내 교과·내 질문) : " + (val("k3") || "(아직 못 정함)"),
+      "왜 하필 내가 : " + (val("k3") || "(아직 못 정함)"),
       "두껍게 쓸 것 : " + thick,
-      "손잡이 : " + grip,
+      "어떻게 씁니까 : " + how,
       "형식 : " + form + " (사진은 기본으로 들어갑니다)",
       "쪽수·사진 수 : " + (val("k6") || "(아직 못 정함)"),
-      "이 꼭지가 하는 일 : " + (val("k7") || "(아직 못 적음)"),
+      "이 글이 맡는 부분 : " + (val("k7") || "(아직 못 적음)"),
       "쓸 도구 : " + tools()
     ];
     var who = val("pov-who");
@@ -345,10 +345,10 @@
     /* 「과학 중2」처럼 학년이 붙어 오므로 채팅 규격 [교과·이름]에 맞게 학년만 떼어 낸다. */
     var subject = val("f-subject").split(/[·\/]/)[0].replace(/\s*(초|중|고)\s*\d.*$/, "").trim();
     var who = [subject, val("f-name")].filter(Boolean).join("·");
-    var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
+    var how = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["짧게 쓰기", "길게 쓰기", "다른 눈으로"]);
     return "[" + (who || "교과·이름") + "] " +
-      (val("k1") || "꼭지 가제") + " | " +
-      (val("k2") || "자세히 볼 것") + " | " + grip;
+      (val("k1") || "글 제목") + " | " +
+      (val("k2") || "자세히 볼 것") + " | " + how;
   }
 
   function syncChatLine() {
@@ -382,7 +382,7 @@
   updateCount();
   syncChatLine();
 
-  var CHAT_KEYS = /^(f-name|f-subject|k1|k2|kk-grip)$/;
+  var CHAT_KEYS = /^(f-name|f-subject|k1|k2)$/;
 
   document.addEventListener("input", function (e) {
     var el = e.target;
