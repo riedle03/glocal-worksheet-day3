@@ -162,30 +162,6 @@
     });
   }
 
-  /* ── 제목 금지어 ──
-     「시」는 '시절'·'다시'처럼 다른 낱말의 일부로도 자주 들어간다.
-     막지 않고 알려만 준다. 판단은 쓰는 사람이 한다. */
-  function checkTitle(el) {
-    var hint = document.getElementById("title-hint");
-    if (!hint || !el) return;
-    var v = (el.value || "").trim();
-    if (!v) { hint.textContent = ""; hint.hidden = true; return; }
-    var hits = [];
-    if (v.indexOf("산문") >= 0) hits.push("산문");
-    if (v.indexOf("시") >= 0) hits.push("시");
-    if (!hits.length) {
-      hint.textContent = "좋습니다. 갈래 이름 없이 제목이 섰습니다.";
-      hint.hidden = false;
-      return;
-    }
-    if (hits.length === 1 && hits[0] === "시") {
-      hint.textContent = "「시」가 들어 있습니다. 갈래를 가리키는 낱말로 쓰셨다면 바꿔 주세요. 「시절」·「다시」처럼 다른 낱말의 일부라면 그대로 두셔도 됩니다.";
-    } else {
-      hint.textContent = "제목에 " + hits.join(" · ") + " 이(가) 들어 있습니다. 갈래 이름을 빼고 무엇이 다른지 직접 말해 보세요.";
-    }
-    hint.hidden = false;
-  }
-
   /* ── 문단 뼈대 조립 ── */
   function val(id) {
     var el = document.getElementById(id);
@@ -286,6 +262,19 @@
     return "(고르지 않음)";
   }
 
+  /* 도구는 여러 개 고를 수 있다 — 초고와 편집을 나눠 쓰는 경우가 흔하다. */
+  function tools() {
+    var names = { "kk/8-a": "자작자작", "kk/8-b": "캔바", "kk/8-c": "구글 독스" };
+    var picked = [];
+    Object.keys(names).forEach(function (k) {
+      var box = document.querySelector('[data-k="' + k + '"]');
+      if (box && box.checked) picked.push(names[k]);
+    });
+    var etc = val("k8");
+    if (etc) picked.push(etc);
+    return picked.length ? picked.join(" · ") : "(아직 못 정함)";
+  }
+
   function buildMemo() {
     var thick = pickedRadio(["kk/4-a", "kk/4-b", "kk/4-c"], ["여정", "견문", "감상"]);
     var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
@@ -302,7 +291,8 @@
       "손잡이 : " + grip,
       "지면의 꼴 : " + form + " (사진은 기본으로 들어갑니다)",
       "쪽수·사진 수 : " + (val("k6") || "(아직 못 정함)"),
-      "이 꼭지가 하는 일 : " + (val("k7") || "(아직 못 적음)")
+      "이 꼭지가 하는 일 : " + (val("k7") || "(아직 못 적음)"),
+      "쓸 도구 : " + tools()
     ];
     var who = val("pov-who");
     if (who) lines.push("나를 보고 있었을 쪽 : " + who);
@@ -390,7 +380,6 @@
   tally();
   spy();
   updateCount();
-  checkTitle(document.getElementById("title-final"));
   syncChatLine();
 
   var CHAT_KEYS = /^(f-name|f-subject|k1|k2|kk-grip)$/;
@@ -400,7 +389,6 @@
     if (!isField(el)) return;
     if (el.tagName === "TEXTAREA") grow(el);
     updateCount(el.id);
-    if (el.id === "title-final") checkTitle(el);
     if (CHAT_KEYS.test(el.id)) syncChatLine();
     if (el.type !== "checkbox" && el.type !== "radio") scheduleSave(el);
   });
@@ -530,7 +518,6 @@
     });
     tally();
     updateCount();
-    checkTitle(document.getElementById("title-final"));
     syncChatLine();
     window.scrollTo({ top: 0, behavior: "auto" });
   });
