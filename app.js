@@ -275,6 +275,20 @@
     return picked.length ? picked.join(" · ") : "(아직 못 정함)";
   }
 
+  /* 칸 2-C에서 고른 취향 — 챗봇이 이 사람 눈으로 캐묻게 하려면 함께 넘겨야 한다. */
+  function taste() {
+    var names = ["사람 얼굴과 표정", "오래된 물건", "글자 · 간판 · 손글씨", "소리", "먹는 것",
+                 "만듦새 · 구조", "식물과 동물", "빛과 그림자", "값 · 숫자", "냄새", "사람 없는 시간"];
+    var picked = [];
+    names.forEach(function (n, i) {
+      var box = document.querySelector('[data-k="taste/' + (i + 1) + '"]');
+      if (box && box.checked) picked.push(n);
+    });
+    var etc2 = val("taste-etc");
+    if (etc2) picked.push(etc2);
+    return picked.join(" · ");
+  }
+
   function buildMemo() {
     var thick = pickedRadio(["kk/4-a", "kk/4-b", "kk/4-c"], ["여정", "견문", "감상"]);
     var how = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["짧게 쓰기", "길게 쓰기", "다른 눈으로"]);
@@ -294,6 +308,10 @@
       "이 글이 맡는 부분 : " + (val("k7") || "(아직 못 적음)"),
       "쓸 도구 : " + tools()
     ];
+    var eyes = taste();
+    if (eyes) lines.push("내가 원래 눈이 가는 것 : " + eyes);
+    var skip = val("gaze2");
+    if (skip) lines.push("일부러 안 쓸 것 : " + skip);
     var who = val("pov-who");
     if (who) lines.push("나를 보고 있었을 쪽 : " + who);
     return lines.join("\n");
