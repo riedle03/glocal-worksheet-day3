@@ -1,0 +1,8 @@
+.omc/
+.vercel/
+.DS_Store
+Thumbs.db
+.vercel
+
+.playwright-mcp/
+*.png

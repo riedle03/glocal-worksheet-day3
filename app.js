@@ -1,0 +1,544 @@
+/* 3일차 활동지 — 입력 보존 · 진행 표시 · 문단 뼈대 조립 · 인쇄 */
+(function () {
+  "use strict";
+
+  /* 1·2일차와 다른 네임스페이스. 같은 브라우저에서 세 활동지를 동시에 열어도
+     서로의 값을 덮어쓰지 않는다. */
+  var NS = "gdb-day3:v1:";
+  var LIMIT = 400;
+
+  var store = (function () {
+    try {
+      var t = "__t";
+      localStorage.setItem(t, t);
+      localStorage.removeItem(t);
+      return localStorage;
+    } catch (e) {
+      return null;
+    }
+  })();
+
+  function keyFor(el) {
+    if (el.dataset.k) return el.dataset.k;
+    var path = [], node = el, root = null;
+    while (node && node !== document.body) {
+      if (node.id) { root = node.id; break; }
+      var p = node.parentNode;
+      if (!p) break;
+      path.push(Array.prototype.indexOf.call(p.children, node));
+      node = p;
+    }
+    var k = (root || "doc") + "/" + path.reverse().join(".");
+    el.dataset.k = k;
+    return k;
+  }
+
+  var SEL = "input[type=text], input[type=url], input[type=checkbox], input[type=radio], textarea, select";
+  var fields = [];
+
+  function isField(el) {
+    return !!(el && el.matches && el.matches(SEL));
+  }
+
+  function collect() {
+    fields = Array.prototype.slice.call(document.querySelectorAll(SEL));
+    fields.forEach(keyFor);
+  }
+
+  function restore() {
+    if (!store) return;
+    fields.forEach(function (el) {
+      var v = store.getItem(NS + el.dataset.k);
+      if (v === null) return;
+      if (el.type === "checkbox" || el.type === "radio") el.checked = v === "1";
+      else el.value = v;
+    });
+  }
+
+  var flag = document.getElementById("saved");
+  var flagTimer = null, saveTimer = null, maxWaitTimer = null, queue = new Set();
+
+  function flash() {
+    if (!flag) return;
+    flag.classList.add("on");
+    clearTimeout(flagTimer);
+    flagTimer = setTimeout(function () { flag.classList.remove("on"); }, 1400);
+  }
+
+  function commit() {
+    if (!store) return;
+    queue.forEach(function (el) {
+      var k = NS + el.dataset.k;
+      if (el.type === "checkbox" || el.type === "radio") {
+        if (el.checked) store.setItem(k, "1");
+        else store.removeItem(k);
+      } else {
+        var v = el.value;
+        if (v === "") store.removeItem(k);
+        else store.setItem(k, v);
+      }
+    });
+    queue.clear();
+    clearTimeout(maxWaitTimer);
+    maxWaitTimer = null;
+    flash();
+  }
+
+  /* 디바운스 400ms. 쉬지 않고 입력하면 커밋이 끝없이 밀리므로 3초 상한을 둔다. */
+  function scheduleSave(el) {
+    queue.add(el);
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(commit, 400);
+    if (!maxWaitTimer) {
+      maxWaitTimer = setTimeout(function () {
+        maxWaitTimer = null;
+        clearTimeout(saveTimer);
+        commit();
+      }, 3000);
+    }
+  }
+
+  /* 라디오는 새로 켜진 쪽만 change가 오고, 꺼진 쪽은 오지 않는다.
+     그대로 두면 저장소에 "1"이 둘 남아 다음 방문에 두 칸이 다 켜진 것으로
+     복원되므로, 같은 그룹의 다른 칸을 직접 지운다. */
+  function clearRadioSiblings(el) {
+    if (el.type !== "radio" || !el.name) return;
+    document.querySelectorAll('input[type=radio][name="' + el.name + '"]').forEach(function (o) {
+      if (o !== el) queue.add(o);
+    });
+  }
+
+  function grow(el) {
+    if (!el || el.tagName !== "TEXTAREA") return;
+    el.style.height = "auto";
+    var min = parseFloat(getComputedStyle(el).minHeight) || 0;
+    el.style.height = Math.max(el.scrollHeight, min) + "px";
+  }
+
+  /* ── 진행: data-progress 체크만 집계 ── */
+  var parts = Array.prototype.slice.call(document.querySelectorAll("[data-part]"));
+  function tally() {
+    parts.forEach(function (sec) {
+      var boxes = sec.querySelectorAll("input[type=checkbox][data-progress]");
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      var bar = document.querySelector('.rail__bar[data-for="' + sec.id + '"] i');
+      if (bar) bar.style.width = boxes.length ? (done / boxes.length) * 100 + "%" : "0%";
+    });
+  }
+
+  function spy() {
+    if (!("IntersectionObserver" in window)) return;
+    var items = {};
+    document.querySelectorAll(".rail__item").forEach(function (li) { items[li.dataset.for] = li; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var li = items[e.target.id];
+        if (li) li.classList.toggle("is-here", e.isIntersecting);
+      });
+    }, { rootMargin: "-84px 0px -62% 0px" });
+    parts.forEach(function (p) { io.observe(p); });
+  }
+
+  /* ── 세 문단 글자 수 (400자 상한) ── */
+  var COUNTED = [
+    { ta: "sum-para", out: "sum-count" },
+    { ta: "cm-para", out: "cm-count" },
+    { ta: "diff-para", out: "diff-count" }
+  ];
+
+  function updateCount(taId) {
+    COUNTED.forEach(function (pair) {
+      if (taId && pair.ta !== taId) return;
+      var ta = document.getElementById(pair.ta);
+      var out = document.getElementById(pair.out);
+      if (!ta || !out) return;
+      var n = ta.value.length;
+      out.textContent = n.toLocaleString("ko-KR") + "자";
+      var over = n > LIMIT;
+      out.classList.toggle("is-over", over);
+      /* 막지는 않는다. 넘겨 쓰고 줄이는 편이 자연스럽다. */
+      out.title = over ? LIMIT + "자를 " + (n - LIMIT) + "자 넘었습니다" : "";
+    });
+  }
+
+  /* ── 제목 금지어 ──
+     「시」는 '시절'·'다시'처럼 다른 낱말의 일부로도 자주 들어간다.
+     막지 않고 알려만 준다. 판단은 쓰는 사람이 한다. */
+  function checkTitle(el) {
+    var hint = document.getElementById("title-hint");
+    if (!hint || !el) return;
+    var v = (el.value || "").trim();
+    if (!v) { hint.textContent = ""; hint.hidden = true; return; }
+    var hits = [];
+    if (v.indexOf("산문") >= 0) hits.push("산문");
+    if (v.indexOf("시") >= 0) hits.push("시");
+    if (!hits.length) {
+      hint.textContent = "좋습니다. 갈래 이름 없이 제목이 섰습니다.";
+      hint.hidden = false;
+      return;
+    }
+    if (hits.length === 1 && hits[0] === "시") {
+      hint.textContent = "「시」가 들어 있습니다. 갈래를 가리키는 낱말로 쓰셨다면 바꿔 주세요. 「시절」·「다시」처럼 다른 낱말의 일부라면 그대로 두셔도 됩니다.";
+    } else {
+      hint.textContent = "제목에 " + hits.join(" · ") + " 이(가) 들어 있습니다. 갈래 이름을 빼고 무엇이 다른지 직접 말해 보세요.";
+    }
+    hint.hidden = false;
+  }
+
+  /* ── 문단 뼈대 조립 ── */
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? (el.value || "").trim() : "";
+  }
+
+  function fill(taId, text, msgId, msg) {
+    var ta = document.getElementById(taId);
+    var out = document.getElementById(msgId);
+    if (!ta) return;
+    if (!text) {
+      if (out) out.textContent = "먼저 위 칸을 채워 주세요.";
+      return;
+    }
+    /* 손으로 고쳐 둔 문단을 말없이 날리지 않는다. */
+    if (ta.value.trim() && !confirm("이 문단에 적어 두신 내용을 지우고 다시 채웁니다. 계속할까요?")) return;
+    ta.value = text;
+    grow(ta);
+    updateCount(taId);
+    scheduleSave(ta);
+    if (out) out.textContent = msg;
+  }
+
+  var sumBtn = document.getElementById("btn-build-sum");
+  if (sumBtn) sumBtn.addEventListener("click", function () {
+    var a = val("sum-a"), b = val("sum-b"), c = val("sum-c");
+    var parts2 = [];
+    if (a) parts2.push(a.replace(/[.·]$/, "") + ".");
+    if (b) parts2.push(b.replace(/[.·]$/, "") + ".");
+    if (c) parts2.push(c.replace(/[.·]$/, "") + ".");
+    fill("sum-para", parts2.join(" "), "sum-msg", "이었습니다. 문장을 자연스럽게 손보세요.");
+  });
+
+  var CM = {
+    "cm/1": "두 글은 같은 하루를 다룬다 — 봄, 남해, 학교 앞 분식집, 김치찌개 한 그릇",
+    "cm/2": "사건의 순서가 같다 — 떠남, 밥집 찾기, 두 사람, 주문, 다툼, 다 먹음, 벽에 적기",
+    "cm/3": "마지막에 벽에 적는 문장이 글자까지 같다",
+    "cm/4": "화자가 끼어들지 않는다 — 말리지도 편들지도 않고 지켜보기만 한다",
+    "cm/5": "감상을 문장으로 말하지 않는다 — 「뭉클했다」 같은 말이 두 글 다 없다",
+    "cm/6": "계절이 사람의 몸에 얹힌다 — 봄과 겨울이 여자의 몸으로 나뉜다"
+  };
+
+  var cmBtn = document.getElementById("btn-build-cm");
+  if (cmBtn) cmBtn.addEventListener("click", function () {
+    var picked = [];
+    Object.keys(CM).forEach(function (k) {
+      var box = document.querySelector('[data-k="' + k + '"]');
+      if (box && box.checked) picked.push(CM[k]);
+    });
+    if (picked.length > 3) {
+      alert("여섯 개를 다 고르면 문단이 나열이 됩니다. 두세 개만 남기고 다시 눌러 보세요.");
+      return;
+    }
+    fill("cm-para", picked.join(". ") + (picked.length ? "." : ""), "cm-msg",
+      picked.length + "개를 이었습니다. 왜 그것이 공통점인지 한 문장을 덧붙이세요.");
+  });
+
+  var DIFF_ROWS = [
+    { name: "여자의 몸", p: "d1p", s: "d1s" },
+    { name: "가는 길", p: "d2p", s: "d2s" },
+    { name: "말투와 부호", p: "d3p", s: "d3s" },
+    { name: "끝나는 자리", p: "d4p", s: "d4s" }
+  ];
+
+  /* 「몸을」/「말투를」처럼 받침에 따라 조사가 갈린다.
+     을(를)로 흘려 두면 손으로 다시 고쳐야 하므로 종성을 보고 고른다. */
+  function objectParticle(word) {
+    var last = word.charCodeAt(word.length - 1);
+    if (last < 0xac00 || last > 0xd7a3) return "를";
+    return (last - 0xac00) % 28 ? "을" : "를";
+  }
+
+  function period(s) {
+    return /[.!?」』]$/.test(s) ? s : s + ".";
+  }
+
+  var diffBtn = document.getElementById("btn-build-diff");
+  if (diffBtn) diffBtn.addEventListener("click", function () {
+    var lines = [];
+    DIFF_ROWS.forEach(function (r) {
+      var pv = val(r.p), sv = val(r.s);
+      if (!pv && !sv) return;
+      lines.push(
+        r.name + objectParticle(r.name) + " 보면, 「알맞은 시절」은 " + period(pv || "( )") +
+        " 「낙서」는 " + period(sv || "( )")
+      );
+    });
+    fill("diff-para", lines.join(" "), "diff-msg",
+      lines.length + "개 자리를 이었습니다. 문장이 끊기니 이어 주는 말을 넣어 손보세요.");
+  });
+
+  /* ── 챗봇 메모 ── */
+  function pickedRadio(names, labels) {
+    for (var i = 0; i < names.length; i++) {
+      var el = document.querySelector('[data-k="' + names[i] + '"]');
+      if (el && el.checked) return labels[i];
+    }
+    return "(고르지 않음)";
+  }
+
+  function buildMemo() {
+    var thick = pickedRadio(["kk/4-a", "kk/4-b", "kk/4-c"], ["여정", "견문", "감상"]);
+    var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
+    var lines = [
+      "저는 문화탐방기행집에 실을 꼭지 하나를 설계하는 중입니다. 아래는 제가 이미 정한 것입니다.",
+      "정해 둔 것을 바꾸지 말고, 빈 곳을 캐물어 주세요.",
+      "",
+      "꼭지 가제 : " + (val("k1") || "(아직 못 정함)"),
+      "탐방지 : " + (val("trip-where") || "(아직 안 적음)"),
+      "붙잡을 것 : " + (val("k2") || "(아직 못 정함)"),
+      "렌즈(내 교과·내 질문) : " + (val("k3") || "(아직 못 정함)"),
+      "두껍게 쓸 것 : " + thick,
+      "손잡이 : " + grip,
+      "지면 모양 : " + (val("k6") || "(아직 못 정함)"),
+      "이 꼭지가 하는 일 : " + (val("k7") || "(아직 못 적음)")
+    ];
+    var who = val("pov-who");
+    if (who) lines.push("말이 남지 않은 쪽 : " + who);
+    return lines.join("\n");
+  }
+
+  var memoArea = document.getElementById("gem-memo");
+  var memoMsg = document.getElementById("memo-msg");
+
+  var buildMemoBtn = document.getElementById("btn-build-memo");
+  if (buildMemoBtn && memoArea) buildMemoBtn.addEventListener("click", function () {
+    if (memoArea.value.trim() &&
+        !confirm("메모 칸에 적어 두신 내용을 지우고 다시 채웁니다. 계속할까요?")) return;
+    memoArea.value = buildMemo();
+    grow(memoArea);
+    scheduleSave(memoArea);
+    if (memoMsg) memoMsg.textContent = "채웠습니다. 고쳐도 됩니다.";
+  });
+
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      return;
+    }
+    done(false);
+  }
+
+  var memoCopyBtn = document.getElementById("btn-copy-memo");
+  if (memoCopyBtn && memoArea) memoCopyBtn.addEventListener("click", function () {
+    var text = (memoArea.value || "").trim() || buildMemo();
+    /* 폴백은 선택 영역을 복사하므로, 칸이 비어 있으면 먼저 채워 넣어야
+       빈 문자열을 복사해 놓고 "복사했습니다"라고 하지 않는다. */
+    if (!memoArea.value.trim()) {
+      memoArea.value = text;
+      grow(memoArea);
+      scheduleSave(memoArea);
+    }
+    copyText(text, function (ok) {
+      if (ok) { if (memoMsg) memoMsg.textContent = "복사했습니다. 챗봇 첫 칸에 붙여 넣으세요."; return; }
+      memoArea.select();
+      var done2 = document.execCommand && document.execCommand("copy");
+      if (memoMsg) memoMsg.textContent = done2
+        ? "복사했습니다. 챗봇 첫 칸에 붙여 넣으세요."
+        : "복사가 막혔습니다. 위 칸을 직접 선택해 복사하세요.";
+    });
+  });
+
+  /* ── 채팅 한 줄 ── */
+  function chatLine() {
+    /* 「과학 중2」처럼 학년이 붙어 오므로 채팅 규격 [교과·이름]에 맞게 학년만 떼어 낸다. */
+    var subject = val("f-subject").split(/[·\/]/)[0].replace(/\s*(초|중|고)\s*\d.*$/, "").trim();
+    var who = [subject, val("f-name")].filter(Boolean).join("·");
+    var grip = pickedRadio(["kk/5-a", "kk/5-b", "kk/5-c"], ["압축", "펼침", "남의 눈"]);
+    return "[" + (who || "교과·이름") + "] " +
+      (val("k1") || "꼭지 가제") + " | " +
+      (val("k2") || "붙잡을 것") + " | " + grip;
+  }
+
+  function syncChatLine() {
+    var el = document.getElementById("chat-line");
+    if (el) el.value = chatLine();
+  }
+
+  var copyBtn = document.getElementById("btn-copy-line");
+  if (copyBtn) copyBtn.addEventListener("click", function () {
+    syncChatLine();
+    var msg = document.getElementById("copy-msg");
+    var text = chatLine();
+    copyText(text, function (ok) {
+      if (ok) { if (msg) msg.textContent = "복사했습니다. 전체 채팅에 붙여 넣으세요."; return; }
+      var el = document.getElementById("chat-line");
+      if (el) { el.removeAttribute("readonly"); el.select(); }
+      var done2 = document.execCommand && document.execCommand("copy");
+      if (msg) msg.textContent = done2
+        ? "복사했습니다. 전체 채팅에 붙여 넣으세요."
+        : "복사가 막혔습니다. 위 칸을 직접 선택해 복사하세요.";
+      if (el) el.setAttribute("readonly", "readonly");
+    });
+  });
+
+  /* ── 초기화 ── */
+  collect();
+  restore();
+  fields.forEach(function (el) { if (el.tagName === "TEXTAREA") grow(el); });
+  tally();
+  spy();
+  updateCount();
+  checkTitle(document.getElementById("title-final"));
+  syncChatLine();
+
+  var CHAT_KEYS = /^(f-name|f-subject|k1|k2|kk-grip)$/;
+
+  document.addEventListener("input", function (e) {
+    var el = e.target;
+    if (!isField(el)) return;
+    if (el.tagName === "TEXTAREA") grow(el);
+    updateCount(el.id);
+    if (el.id === "title-final") checkTitle(el);
+    if (CHAT_KEYS.test(el.id)) syncChatLine();
+    if (el.type !== "checkbox" && el.type !== "radio") scheduleSave(el);
+  });
+
+  document.addEventListener("change", function (e) {
+    var el = e.target;
+    if (!isField(el)) return;
+    clearRadioSiblings(el);
+    scheduleSave(el);
+    if (el.type === "checkbox") tally();
+    if (el.type === "radio") syncChatLine();
+  });
+
+  window.addEventListener("beforeunload", function () {
+    clearTimeout(saveTimer);
+    commit();
+  });
+
+  /* ── 인쇄 ── */
+  var reclose = [];
+  window.addEventListener("beforeprint", function () {
+    reclose = [];
+    document.querySelectorAll("details:not([open])").forEach(function (d) {
+      d.open = true;
+      reclose.push(d);
+    });
+    document.querySelectorAll("textarea").forEach(grow);
+  });
+  window.addEventListener("afterprint", function () {
+    reclose.forEach(function (d) { d.open = false; });
+    reclose = [];
+  });
+
+  var printBtn = document.getElementById("btn-print");
+  if (printBtn) printBtn.addEventListener("click", function () { window.print(); });
+
+  if (!store && flag) {
+    flag.textContent = "저장 안 됨";
+    flag.classList.add("on");
+    flag.style.color = "var(--seal)";
+  }
+
+  /* ── 앵커로 점프하면 접힌 곳을 펴 준다 ── */
+  function openTarget() {
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    var d = el.tagName === "DETAILS" ? el : el.closest("details");
+    while (d) {
+      d.open = true;
+      d = d.parentElement && d.parentElement.closest("details");
+    }
+    el.scrollIntoView({ block: "start" });
+  }
+  window.addEventListener("hashchange", openTarget);
+  if (location.hash) setTimeout(openTarget, 0);
+
+  /* ── 상단 고정 요소 실측 ──
+     좁은 폭에서 툴바가 줄바꿈하면 고정 높이보다 커져 가로 레일과 겹치고,
+     앵커로 점프했을 때 착지 지점의 첫 줄이 잘린다. 실제 높이를 재서 CSS 변수로 넘긴다. */
+  (function stickyMetrics() {
+    var topbar = document.querySelector(".topbar");
+    var rail = document.querySelector(".rail");
+    if (!topbar) return;
+    function measure() {
+      var th = Math.round(topbar.getBoundingClientRect().height);
+      var rh = rail && getComputedStyle(rail).position === "sticky"
+        ? Math.round(rail.getBoundingClientRect().height) : 0;
+      var root = document.documentElement.style;
+      root.setProperty("--topbar-h", th + "px");
+      root.setProperty("--sticky-h", th + rh + 22 + "px");
+    }
+    measure();
+    if ("ResizeObserver" in window) {
+      var ro = new ResizeObserver(measure);
+      ro.observe(topbar);
+      if (rail) ro.observe(rail);
+    }
+    window.addEventListener("resize", measure);
+  })();
+
+  /* ── 텍스트 백업 ── */
+  var exportBtn = document.getElementById("btn-export");
+  if (exportBtn) exportBtn.addEventListener("click", function () {
+    var lines = ["3일차 활동지 — 같은 하루, 두 번 쓰기 · 문화탐방기행집", ""];
+    parts.forEach(function (sec) {
+      var head = sec.querySelector(".part__title");
+      var railItem = document.querySelector('.rail__item[data-for="' + sec.id + '"] .rail__link');
+      lines.push("──────────────────────────────");
+      lines.push(head ? head.textContent.trim() : railItem ? railItem.textContent.trim() : sec.id);
+      lines.push("");
+      sec.querySelectorAll("[data-k]").forEach(function (el) {
+        if (el.type === "checkbox" || el.type === "radio") return;
+        var v = (el.value || "").trim();
+        if (!v) return;
+        /* 라벨이 붙은 칸은 라벨을, 없으면 aria-label이나 placeholder를 이름으로 쓴다. */
+        var lab = el.id ? sec.querySelector('label[for="' + el.id + '"]') : null;
+        var name = lab ? lab.textContent.trim()
+                 : el.getAttribute("aria-label") || el.getAttribute("placeholder") || el.dataset.k;
+        lines.push("· " + name);
+        lines.push("  " + v.replace(/\n/g, "\n  "));
+        lines.push("");
+      });
+    });
+    lines.push("──────────────────────────────");
+    lines.push("채팅 한 줄: " + chatLine());
+    var blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+    var a = document.createElement("a");
+    var who = val("f-name") || "이름";
+    a.href = URL.createObjectURL(blob);
+    a.download = "D3_" + who.replace(/\s+/g, "") + "_활동지.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  var resetBtn = document.getElementById("btn-reset");
+  if (resetBtn) resetBtn.addEventListener("click", function () {
+    if (!confirm("이 활동지(3일차)에 적은 내용을 전부 지웁니다. 1·2일차 저장은 건드리지 않습니다. 계속할까요?")) return;
+    fields.forEach(function (el) {
+      if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+      if (store) store.removeItem(NS + el.dataset.k);
+      grow(el);
+    });
+    tally();
+    updateCount();
+    checkTitle(document.getElementById("title-final"));
+    syncChatLine();
+    window.scrollTo({ top: 0, behavior: "auto" });
+  });
+
+  if (!store) {
+    var warn = document.createElement("p");
+    warn.className = "warn";
+    warn.textContent =
+      "이 브라우저에서는 적으신 내용이 자동으로 저장되지 않습니다. 창을 닫기 전에 인쇄 · PDF로 남겨 두십시오.";
+    var main = document.querySelector(".page");
+    if (main) main.insertBefore(warn, main.firstChild);
+  }
+})();
