@@ -721,26 +721,15 @@ ol.steps li { margin-bottom: 7px; }
 
 .topbar__symbol--d3 { font-family: var(--poem); font-weight: 700; font-size: 17px; }
 
-/* 표지 — 3일차에는 사진을 쓰지 않는다. 두 글에서 뽑은 구절이 곧 배경이다. */
-.cover--word {
+/* 표지 — 왼쪽 45%를 비워 둔 그림이라 글자가 그 위에 그대로 앉는다.
+   background는 이미지가 뜨기 전 잠깐 보이는 바탕이다. */
+.cover--trip {
   background:
     radial-gradient(120% 100% at 82% 18%, #dfe7e2 0%, rgba(223,231,226,0) 62%),
     linear-gradient(140deg, #eee7d8 0%, #e2e8e1 48%, #cfd9d3 100%);
 }
-.cover__field {
-  position: absolute; inset: 0; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: center; gap: 4px;
-  padding: 34px 30px 34px 46%;
-  font-family: var(--poem); font-size: clamp(15px, 1.5vw, 21px); line-height: 1.85;
-  color: rgba(25, 52, 59, .3); white-space: nowrap; user-select: none;
-}
-.cover__field span:nth-child(even) { padding-left: 3.2em; }
-.cover__field span:nth-child(3n) { color: rgba(29, 89, 100, .34); }
-.cover--word .cover__shade {
-  background: linear-gradient(90deg, rgba(253,247,235,.97) 0%, rgba(253,247,235,.92) 34%, rgba(253,247,235,.34) 62%, rgba(253,247,235,.06) 100%);
-}
-@media (max-width: 820px) {
-  .cover__field { padding-left: 26px; opacity: .5; }
+.cover--trip .cover__shade {
+  background: linear-gradient(90deg, rgba(253,247,235,.95) 0%, rgba(253,247,235,.86) 34%, rgba(253,247,235,.3) 62%, rgba(253,247,235,.04) 100%);
 }
 
 .journey--7 { grid-template-columns: repeat(7, 1fr); }
