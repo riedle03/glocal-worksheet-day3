@@ -777,3 +777,13 @@ ol.steps li { margin-bottom: 7px; }
 @media (max-width: 640px) {
   .det-body .poem--photo .poem__b { font-size: 15px; }
 }
+
+/* 좁은 화면에서 상단 버튼 세 개가 한 줄에 안 들어가 문서 전체가 20px쯤 옆으로 밀렸다.
+   버튼을 줄여 우겨넣는 대신 한 줄을 내준다 — 저장·백업 버튼은 3시간 내내 눌러야 한다.
+   높이는 app.js가 실측해 --sticky-h로 넘기므로 줄바꿈해도 앵커 착지가 어긋나지 않는다. */
+@media (max-width: 440px) {
+  .topbar { flex-wrap: wrap; row-gap: 8px; }
+  .topbar__spacer { display: none; }
+  .topbar__tools { width: 100%; justify-content: flex-start; gap: 6px; }
+  .saved { margin-left: auto; }
+}
