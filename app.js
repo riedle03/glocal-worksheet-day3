@@ -295,7 +295,7 @@
     var form = pickedRadio(["kk/6-a", "kk/6-b", "kk/6-c"], ["포토시", "포토에세이", "사진 여럿 + 짧은 말"]);
     var lines = [
       "저는 문화탐방기행집에 실을 글 한 편을 설계하는 중입니다. 아래는 제가 이미 정한 것입니다.",
-      "정해 둔 것을 바꾸지 말고, 빈 곳을 캐물어 주세요.",
+      "정해 둔 것을 몰래 바꾸지 말고, 눈에 안 보이는 말과 빈 칸을 시험해 주세요. 막히면 갈 길을 보여 주세요.",
       "",
       "글 제목(임시) : " + (val("k1") || "(아직 못 정함)"),
       "탐방지 : " + (val("trip-where") || "(아직 안 적음)"),
@@ -330,13 +330,58 @@
     if (memoMsg) memoMsg.textContent = "채웠습니다. 고쳐도 됩니다.";
   });
 
+  function copyFallback(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+
   function copyText(text, done) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(copyFallback(text)); });
       return;
     }
-    done(false);
+    done(copyFallback(text));
   }
+
+  /* ── Gem 지침 복사 ── */
+  var promptPre = document.getElementById("gem-prompt");
+  var promptMsg = document.getElementById("prompt-msg");
+  var gemInstructions = (typeof window.GEM_INSTRUCTIONS === "string" && window.GEM_INSTRUCTIONS) || "";
+  if (promptPre && gemInstructions) promptPre.textContent = gemInstructions;
+
+  var copyPromptBtn = document.getElementById("btn-copy-prompt");
+  if (copyPromptBtn) copyPromptBtn.addEventListener("click", function () {
+    var text = gemInstructions || (promptPre && promptPre.textContent) || "";
+    if (!text.trim()) {
+      if (promptMsg) promptMsg.textContent = "지침을 불러오지 못했습니다. 페이지를 새로 고침해 보세요.";
+      return;
+    }
+    copyText(text, function (ok) {
+      if (promptMsg) promptMsg.textContent = ok
+        ? "복사했습니다. 「새 Gem 열기」에서 Instructions 칸에 붙여 넣으세요."
+        : "복사가 막혔습니다. 「지침 미리 보기」를 열어 직접 선택해 복사하세요.";
+      if (!ok) {
+        var ins = document.getElementById("gem-ins");
+        if (ins) ins.open = true;
+        if (promptPre) {
+          var range = document.createRange();
+          range.selectNodeContents(promptPre);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+    });
+  });
 
   var memoCopyBtn = document.getElementById("btn-copy-memo");
   if (memoCopyBtn && memoArea) memoCopyBtn.addEventListener("click", function () {
@@ -349,12 +394,9 @@
       scheduleSave(memoArea);
     }
     copyText(text, function (ok) {
-      if (ok) { if (memoMsg) memoMsg.textContent = "복사했습니다. 챗봇 첫 칸에 붙여 넣으세요."; return; }
+      if (ok) { if (memoMsg) memoMsg.textContent = "복사했습니다. 방금 만든 Gem 첫 칸에 붙여 넣으세요."; return; }
       memoArea.select();
-      var done2 = document.execCommand && document.execCommand("copy");
-      if (memoMsg) memoMsg.textContent = done2
-        ? "복사했습니다. 챗봇 첫 칸에 붙여 넣으세요."
-        : "복사가 막혔습니다. 위 칸을 직접 선택해 복사하세요.";
+      if (memoMsg) memoMsg.textContent = "복사가 막혔습니다. 위 칸을 직접 선택해 복사하세요.";
     });
   });
 

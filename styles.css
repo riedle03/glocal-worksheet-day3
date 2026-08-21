@@ -101,6 +101,8 @@ body {
 .btn:hover { background: var(--sheet); border-color: var(--ink-3); color: var(--ink); }
 .btn--quiet { border-color: transparent; color: var(--ink-3); }
 .btn--quiet:hover { color: var(--seal); border-color: var(--rule); background: transparent; }
+a.btn { display: inline-block; text-decoration: none; color: var(--ink-2); }
+a.btn:hover { color: var(--ink); }
 
 .warn {
   margin: 0 0 26px; padding: 12px 16px; font-size: 13.5px;
@@ -755,6 +757,15 @@ ol.steps li { margin-bottom: 7px; }
 
 /* 문단 뼈대 조립 버튼 줄 */
 .mk--do { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+
+.gem-prompt {
+  margin: 0; max-height: 280px; overflow: auto;
+  padding: 12px 14px;
+  font-family: var(--sans); font-size: 12.5px; line-height: 1.6;
+  white-space: pre-wrap; word-break: keep-all;
+  color: var(--ink-2); background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 8px;
+}
 
 /* 챕터 1의 산문은 시와 나란히 읽히는 원문이다.
    기본 .poem--photo는 사진 설명용이라 14px로 작다 — 시(.verse)와 같은 크기로 올린다. */
